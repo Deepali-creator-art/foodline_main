@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+{% block contents %}
+<h1>Welcome to {{user.username}} and role is {{user.get_role}}</h1>
+{% include 'includes/messages.html' %}
+{% endblock contents %}
