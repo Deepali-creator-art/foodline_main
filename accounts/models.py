@@ -28,9 +28,9 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 class User(AbstractBaseUser):
-    RESTAURANT=1
+    VENDOR=1
     CUSTOMER=2
-    ROLE_CHOICE=((RESTAURANT,'Restaurant'),
+    ROLE_CHOICE=((VENDOR,'Vendor'),
                  (CUSTOMER,'Customer'))
     first_name=models.CharField(max_length=50)
     last_name=models.CharField(max_length=50)
@@ -58,6 +58,12 @@ class User(AbstractBaseUser):
         return self.is_admin
     def has_module_perms(self,app_label):
         return True
+    def get_role(self):
+        if self.role==1:
+            user_role='Vendor'
+        elif self.role==2:
+            user_role='Customer'
+        return user_role
 class UserProfile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE,blank=True,null=True)
     profile_picture=models.ImageField(upload_to='users/profile_pictures',blank=True)

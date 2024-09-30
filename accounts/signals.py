@@ -8,11 +8,11 @@ def post_save_create_profile_receiver(sender,instance,created,**kwargs):
         UserProfile.objects.create(user=instance)
     else:
         try:
-            UserProfile.objects.create(user=instance)
+            UserProfile.objects.get(user=instance)
             #print("User profile is created")
             
         except:
-            profile=UserProfile.objects.get(user=instance)
+            profile=UserProfile.objects.create(user=instance)
             profile.save()
             #print("User was not exists so I created a new one")
         #print("User is updated")
