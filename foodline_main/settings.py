@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "accounts",
+    "vendor",
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,14 @@ STATICFILES_DIRS=[static_dir]
 #media configuration
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS={
+    messages.ERROR:'danger',
+}
+#EMAIL CONFIGURATION
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER='dshinkar@sevenmentor.com'
+EMAIL_HOST_PASSWORD='lisu vcru fwsa soaz'
+EMAIL_USE_TLS=True
+DEFAULT_FROM_EMAIL='Foodonline Marketplace <dshinkar@sevenmentor.com>'

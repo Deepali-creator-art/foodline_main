@@ -38,7 +38,7 @@ def registerUser(request):
             user.save()
             #send verification email
             email_subject='Please activate your account'
-            email_template='accounts/account_verification_email.html'
+            email_template='accounts/emails/account_verification_email.html'
             send_verification_email(request,user,email_subject,email_template)
             messages.success(request,"Your account has bees registered successfully")
             return redirect('registerUser')
@@ -66,10 +66,11 @@ def registerVendor(request):
             vendor=v_form.save(commit=False)
             vendor.user=user
             user_profile=UserProfile.objects.get(user=user)
+            vendor.user_profile=user_profile
             vendor.save()
             #send verification email
             email_subject='Please activate your account'
-            email_template='accounts/account_verification_email.html'
+            email_template='accounts/emails/account_verification_email.html'
             send_verification_email(request,user,email_subject,email_template)
             messages.success(request,'Your account has been registered successfully,Please wait for approval')
             return redirect('registerVendor')
@@ -145,10 +146,10 @@ def forgot_password(request):
             user=User.objects.get(email__exact=email)
             #dend reset password email
             mail_subject='Reset your password'
-            mail_template='accounts/reset_password.html'
+            mail_template='accounts/reset_password_validate.html'
             send_verification_email(request,user,mail_subject,mail_template)
             messages.success(request,'Password reset link has been sent to your email address')
-            return redirect('login')
+            return redirect('reset_password')
         else:
             messages.success(request,'Account does not exist')
             return redirect('forgot_password')
@@ -168,6 +169,21 @@ def reset_password_validate(request,uidb64,token):
     else:
         messages.error(request,'This link has been expired')
         return redirect('myAccount')
-    return
+    
 def reset_password(request):
+    if request.method=='POST':
+        password=request.POST['password']
+        confirm_password=request.POST['confirm_password']
+        if password==confirm_password:
+            pk=request.session.get('uid')
+            user=User.objects.get(pk=pk)
+            user.set_password(password)
+            user.is_active=True
+            user.save()
+            messages.success(request,'Password reset successfully')
+            return redirect('login')
+        else:
+            messages.error(request,'Password do not match')
+            return redirect('reset_password')
+    
     return render(request,'accounts/reset_password.html')
