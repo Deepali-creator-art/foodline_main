@@ -4,8 +4,7 @@
 <!-- Main Section Start -->
 <div class="main-section">
     <div class="page-section restaurant-detail-image-section" 
-    style=" background: url({% if vendor.user_profile.cover_photos %}{{vendor.user_profile.cover_photos.url}} {% else %}
-    {% static 'images/default-cover.png' %} {% endif %}) no-repeat scroll 0 0 / cover;">
+    style="background: url({% if vendor.user_profile.cover_photos %}{{vendor.user_profile.cover_photos.url}} {% else %}{% static 'images/default-cover.png' %} {% endif %}) no-repeat scroll 0 0 / cover;">
         <!-- Container Start -->
         <div class="container">
             <!-- Row Start -->
@@ -111,9 +110,13 @@
                                                     <span>{{food.description}}</span>
                                                 </div>
                                                 <div class="price-holder">
-                                                    <span class="price">{{food.price}}</span>
-                                                    <a href="#" class="restaurant-add-menu-btn"><i class="icon-plus4 text-color"></i></a>
-                                                    <span id="add-menu-loader-10"></span>
+                                                    <span class="price">{{food.price}}</span>&nbsp;&nbsp;
+                                                    <a href="#" class="decrease_cart" data-id="{{food.id}}" data-url="{% url 'decrease_cart' food.id %}"><i class="icon-minus text-color"></i></a>
+
+                                                   &nbsp;&nbsp;
+                                                    <label id="qty-{{food.id}}"></label>
+                                                    <a href="#" class="add_to_cart" data-id="{{food.id}}" data-url="{% url 'add_to_cart' food.id %}">
+                                                        <i class="icon-plus4 text-color"></i></a>
                                                 </div>
                                             </li>
                                             {% endfor %}
@@ -121,6 +124,12 @@
                                         {% endfor %}
                                         
                                     </div>
+                                    {% for item in cart_items %}
+                                    <span id="qty-{{item.fooditem.id}}" class="item_qty d-none" data-qty="{{item.quantity}}">
+                                        {{item.quantity}}
+                                    </span>
+                                    
+                                    {% endfor %}
                                 </div>
                             </div>
                             
