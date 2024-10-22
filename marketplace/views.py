@@ -36,29 +36,30 @@ def vendor_detail(request,vendor_slug):
 def search(request):
     return HttpResponse("Search page")
 def add_to_cart(request,food_id):
-    if request.user.is_authenticated:
-        if request.headers.get('x-requested-with')=='XMLHttpRequest':
-            # check if the food item exists
-            try:
-                fooditem=FoodItem.objects.get(id=food_id) 
-                #check if the user has already added that food to the cart
+        if request.user.is_authenticated:
+            if request.headers.get('x-requested-with')=='XMLHttpRequest':
+                # check if the food item exists
                 try:
-                    chkCart=Cart.objects.get(user=request.user,fooditem=fooditem)
-                    #increase cart quantity
-                    chkCart.quantity+=1
-                    chkCart.save()
-                    return JsonResponse({'status':'success','message':'Increased cart quantity','cart_counter':get_cart_counter(request),'qty':chkCart.quantity,'cart_amount':get_cart_amount(request)})
+                    fooditem=FoodItem.objects.get(id=food_id) 
+                    #check if the user has already added that food to the cart
+                    try:
+                        chkCart=Cart.objects.get(user=request.user,fooditem=fooditem)
+                        #increase cart quantity
+                        chkCart.quantity+=1
+                        chkCart.save()
+                        return JsonResponse({'status':'success','message':'Increased cart quantity','cart_counter':get_cart_counter(request),'qty':chkCart.quantity,'cart_amount':get_cart_amount(request)})
+                    except:
+                        chkCart=Cart.objects.create(user=request.user,fooditem=fooditem,quantity=1)
+                        return JsonResponse({'status':'success','message':'Food item added to cart' ,'cart_counter':get_cart_counter(request),'qty':chkCart.quantity,'cart_amount':get_cart_amount(request)})
+                
+                        
                 except:
-                    chkCart=Cart.objects.create(user=request.user,fooditem=fooditem,quantity=1)
-                    return JsonResponse({'status':'success','message':'Food item added to cart' ,'cart_counter':get_cart_counter(request),'qty':chkCart.quantity,'cart_amount':get_cart_amount(request)})
-               
-                    
-            except:
-                 return JsonResponse({'status':'Failed','message':'This food does not exist'})
-        else:       
-            return JsonResponse({'status':'Failed','message':'Invalid request'})
-    else:
-        return JsonResponse({'status':'login_required','message':'Please login to continue'})
+                    return JsonResponse({'status':'Failed','message':'This food does not exist'})
+            else:       
+                return JsonResponse({'status':'Failed','message':'Invalid request'})
+        else:
+            return JsonResponse({'status':'login_required','message':'Please login to continue'})
+   
 def decrease_cart(request,food_id):
     if request.user.is_authenticated:
         if request.headers.get('x-requested-with')=='XMLHttpRequest':
@@ -69,7 +70,7 @@ def decrease_cart(request,food_id):
                 try:
                     chkCart=Cart.objects.get(user=request.user,fooditem=fooditem)
                     #decrease_cart quantity
-                    if chkCart>1:
+                    if chkCart.quantity>1:
                         chkCart.quantity-=1
                         chkCart.save()
                     else:
@@ -78,7 +79,7 @@ def decrease_cart(request,food_id):
                     return JsonResponse({'status':'success','cart_counter':get_cart_counter(request),'qty':chkCart.quantity,'cart_amount':get_cart_amount(request)})
                 except:
                     chkCart=Cart.objects.create(user=request.user,fooditem=fooditem,quantity=1)
-                    return JsonResponse({'status':'Failure','message':"We don't have item in a cart"})
+                    return JsonResponse({'status':'Failed','message':"We don't have item in a cart"})
                
                     
             except:
