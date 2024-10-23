@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block contents %}
+<!-- Main Section Start -->
+<div class="main-section pt-5">
+    
+
+    <div class="page-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="tabs-holder horizontal">
+                        <ul class="stickynav-tabs nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="">
+                            <i class="icon- icon-room_service"></i>Billing Address</a></li>
+                            
+                            </ul>
+                        
+                        
+                        <div class="tab-content">
+                            <div id="home" class="tab-pane in active">
+                                <div class="menu-itam-holder">
+                                    
+                                    <div id="menu-item-list-6272" class="menu-itam-list">
+                                        
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="form-group col-md-6 col-sm-12 col-lg-6 ">
+                                            First Name :{{form.first_name}}
+                                        </div> 
+                                        <div class="form-group col-md-6 col-sm-12 col-lg-6 ">
+                                            Last Name :{{form.last_name}}
+                                        </div>     
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6 col-sm-12 col-lg-6 ">
+                                            Phone Number :{{form.phone_number}}
+                                        </div> 
+                                        <div class="form-group col-md-6 col-sm-12 col-lg-6 ">
+                                            Email :{{form.email}}
+                                        </div>     
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12 col-sm-12 col-lg-12 ">
+                                            Address :{{form.address}}
+                                        </div> 
+                                           
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6 col-sm-12 col-lg-6 ">
+                                          Country:{{form.country}}
+                                        </div> 
+                                        <div class="form-group col-md-6 col-sm-12 col-lg-6 ">
+                                            State :{{form.state}}
+                                        </div>     
+                                    </div>
+                                    <div class="row">
+                                        <div class="row">
+                                        <div class="form-group col-md-6 col-sm-12 col-lg-6 ">
+                                          Country:{{form.country}}
+                                        </div> 
+                                        <div class="form-group col-md-6 col-sm-12 col-lg-6 ">
+                                            State :{{form.state}}
+                                        </div>     
+                                    </div>
+                                    <div class="form-group col-md-6 col-sm-12 col-lg-6 ">
+                                        City:{{form.city}}
+                                      </div> 
+                                        <div class="form-group col-md-6 col-sm-12 col-lg-6 ">
+                                          Pin code:{{form.pin_code}}
+                                        </div> 
+                                         
+                                    </div>
+                                </form>
+                                        
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- Your order section -->
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="tabs-holder horizontal">
+                        <ul class="stickynav-tabs nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="">
+                            <i class="icon- icon-room_service"></i>Your Orders</a></li>
+                            
+                            </ul>
+                    </div>        
+                        
+                        
+                        <div class="tab-content">
+                            <div id="home" class="tab-pane in active">
+                                <div class="menu-itam-holder">
+                                    <div>
+                                        <ul>
+                                            <li style="list-style-type:none;">
+                                                SubTotal
+                                                <span class="price float-right">
+                                                    <span class="currency">$</span>
+                                                    <span id="subtotal">{{subtotal}}</span>
+                                                </span>
+                                            </li>
+
+                                            {% for key,value in tax_dict.items %}
+                                                {% for i,j in value.items %}
+                                                    <li style="list-style-type:none;">
+                                                        {{key}} <small>({{i}}%)</small>
+                                                        <span class="price float-right">
+
+                                                            <span class="currency">$</span>
+                                                            <span id="tax-{{key}}">{{j}}</span>
+                                                        </span>
+                                                    </li>
+                                                {% endfor %}
+                                            {% endfor %}
+
+                                            <li style="list-style-type:none; font-weight:600;">
+                                                TOTAL
+                                                <span class="price float-right">
+                                                    <span class="currency">$</span>
+                                                    <span id="grand_total">{{grand_total}}</span>
+                                                </span>
+
+                                            </li>
+                                            <button type="submit" class="btn btn-danger w-100 p-2 mt-3 text-uppercase">Place Orders</button>
+                                        </ul>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Section End -->
+{% endblock contents %}
