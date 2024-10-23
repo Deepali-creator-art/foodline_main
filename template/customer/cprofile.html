@@ -32,7 +32,7 @@
 																	<div class="drag-list">
 																		<div class="item-thumb">
 																			{% if user_profile.profile_picture %}
-																			<img class="thumbnail" src="{user_profile.profile_picture.url}}" alt="logo">
+																			<img class="thumbnail" src="{{user_profile.profile_picture.url}}" alt="logo">
 																			{% else %}
 																			<img class="thumbnail" src="{% static 'images/default-profile.PNG' %}" alt="logo">
 																			{% endif %}
@@ -43,15 +43,13 @@
 														</div>
 														<div class="text-holder">
 															<label>Update Profile Photo</label>
-															<div class="upload-gallery">
-																{% if user_profile.profile_picture %}
-																{{user_profile.profile_picture}}
-																{% else %}
-																{% static 'images/default-profile.png' %}
-																{% endif %}
-															</div>
+															
+																<div class="upload-gallery">
+																	{{profile_form.profile_picture}}
+																</div>
+																
 														</div>
-														<label class="text-danger">{{user_profile.profile_picture.errors}}</label>
+															<label class="text-danger">{{profile_form.profile_picture.errors}}</label>
 													</div>
 												</div>
 												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -74,11 +72,11 @@
 														<div class="text-holder">
 															<label>Update Cover Photo</label>
 															<div class="upload-gallery">
-																{{user_profile.cover_photos}}
+																{{profile_form.cover_photos}}
 															</div>
 															
 														</div>
-														<label class="text-danger">{{user_profile.cover_photos.errors}}</label>
+														<label class="text-danger">{{profile_form.cover_photos.errors}}</label>
 													</div>
 												</div>
 												
