@@ -23,7 +23,7 @@
                                     
                                     <div id="menu-item-list-6272" class="menu-itam-list">
                                         
-                                <form method="POST">
+                                <form action="{% url 'place_order' %}"  method="POST">
                                     {% csrf_token %}
                                     <div class="row">
                                         <div class="form-group col-md-6 col-sm-12 col-lg-6 ">
@@ -35,7 +35,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-md-6 col-sm-12 col-lg-6 ">
-                                            Phone Number :{{form.phone_number}}
+                                            Phone Number :{{form.phone}}
                                         </div> 
                                         <div class="form-group col-md-6 col-sm-12 col-lg-6 ">
                                             Email :{{form.email}}
@@ -56,23 +56,14 @@
                                         </div>     
                                     </div>
                                     <div class="row">
-                                        <div class="row">
                                         <div class="form-group col-md-6 col-sm-12 col-lg-6 ">
-                                          Country:{{form.country}}
-                                        </div> 
-                                        <div class="form-group col-md-6 col-sm-12 col-lg-6 ">
-                                            State :{{form.state}}
+                                            Pin code:{{form.pin_code}}
                                         </div>     
-                                    </div>
-                                    <div class="form-group col-md-6 col-sm-12 col-lg-6 ">
-                                        City:{{form.city}}
-                                      </div> 
                                         <div class="form-group col-md-6 col-sm-12 col-lg-6 ">
-                                          Pin code:{{form.pin_code}}
+                                            City:{{form.city}}
                                         </div> 
-                                         
                                     </div>
-                                </form>
+                                    
                                         
                                         
                                     </div>
@@ -97,6 +88,39 @@
                         <div class="tab-content">
                             <div id="home" class="tab-pane in active">
                                 <div class="menu-itam-holder">
+                                    <div id="menu-item-list-6272" class="menu-itam-list">
+                                        
+                                                                                
+                                        <ul>
+                                            
+                                            {% for item in cart_items %}
+                                            <li id="cart-item-{{item.id}}">
+                                                <div class="image-holder"> 
+                                                    <img src="{{item.fooditem.image.url}}" alt=""></div>
+                                                <div class="text-holder">
+                                                    <h6>{{item.fooditem}}</h6>
+                                                    <span>{{item.fooditem.description}}</span>
+                                                <a href="{% url 'vendor_detail' item.fooditem.vendor.vendor_slug %}" class="badge badge-warning">{{item.fooditem.vendor}}</a>
+
+                                                </div>
+                                                <div class="quantity" style="display:inline-block;position:absolute;top:50px;transform:translateY(-50%);margin-top:-20px">
+                                                    <span>{{item.quantity}}  qty </span>
+
+                                                </div>
+                                                <div class="price-holder">
+                                                    <span class="price">{{item.fooditem.price}}</span>
+                                                  
+                                                </div>
+
+                                            </li>
+                                            {% endfor %}
+                                            
+                                        </ul>
+                                        
+                                        
+                                    </div>
+             
+
                                     <div>
                                         <ul>
                                             <li style="list-style-type:none;">
@@ -128,10 +152,27 @@
                                                 </span>
 
                                             </li>
-                                            <button type="submit" class="btn btn-danger w-100 p-2 mt-3 text-uppercase">Place Orders</button>
+                                            <!-- Select Payment Method -->
+                                             <h5>SELECT PAYMENT METHOD</h5>
+                                             <div class="payment-method">
+                                                <label>
+                                                    <input type="radio" name="payment_method" value="PayPal">
+                                                    <img src="{% static 'images/PayPal.png' %}" width="100">
+                                                </label>
+                                                &nbsp;&nbsp;&nbsp;
+                                                <label>
+                                                    <input type="radio" name="payment_method" value="RazorPay">
+                                                    <img src="{% static 'images/razorpay_logo.png' %}" width="100">
+
+                                                </label>
+                                                
+
+                                             </div>
+                                             <span class="text-danger"   id="payment-method-error"></span>
+                                            <button onclick="return payMethodConfirm();"   type="submit" class="btn btn-danger w-100 p-2 mt-3 text-uppercase">Place Orders</button>
                                         </ul>
                                     </div>
-                                    
+                                    </form>
                                 </div>
                             </div>
                             
@@ -143,4 +184,27 @@
     </div>
 </div>
 <!-- Main Section End -->
+ <script>
+    function payMethodConfirm(){
+        var payMethod=$("input[name='payment_method']:checked").val()
+    //swal(payMethod)
+        if(!payMethod){
+            $('#payment-method-error').html("Select Payment Method");
+            //alert("Nothing Selected");
+            return false;
+        }else {
+            var conf=confirm("You have selected "  +payMethod+  "as your preferred payment method \n Click 'Ok' to continue")
+            if(conf==true){
+                return true;
+            }else{
+                return false;
+            }
+        }  
+        
+    }
+    $("input[name=payment_method]").on('change',function(){
+       $('#payment-method-error').html("");
+    });
+    
+ </script>
 {% endblock contents %}
