@@ -115,8 +115,12 @@
                                                 </span>
 
                                             </li>
+                                            {% if order.payment_method == 'PayPal' %}
                                             
                                             <div id="paypal-button-container">
+                                                {% elif order.payment_method == 'RazorPay' %}
+                                                <button>RazorPay</button>
+                                                {% endif %}
 
                                             </div>
                                         </ul>
@@ -155,7 +159,7 @@ function getCookie(name) {
     var grand_total="{{grand_total}}"
     var url="{% url 'payments' %}"
     var order_number="{{order.order_number}}"
-    var csrftoken = getCookie('csrftoken');
+    const csrftoken = getCookie('csrftoken');
     var order_complete="{% url 'order_complete' %}"
     console.log(csrftoken)
     // Render the PayPal button into #paypal-button-container
@@ -174,16 +178,16 @@ function getCookie(name) {
 
         // Call your server to finalize the transaction
         onApprove: function(data, actions) {
-            return actions.order.capture().then(function(orderedData){
+            return actions.order.capture().then(function(Object){
 
-                   console.log(orderedData)
+                console.log(Object)
                    
                 // Successful capture! For demo purposes:
                
-                var transaction=orderData.purchase_units[0].payments.captures[0];
-                console.log(transaction.id)
+                var transaction=Object.purchase_units[0].payments.captures[0];
+               
                 var transaction_id=transaction.id
-                var status=orderData.status
+                var status=transaction.status
                 var payment_method='PayPal'
                 sendTransaction(transaction_id,payment_method,status);
                 // Replace the above to show a success message within this page, e.g.
@@ -201,7 +205,7 @@ function getCookie(name) {
             type:'POST',
             url:url,
             data:{
-                'order_number':order_name,
+                'order_number':order_number,
                 'transaction_id':transaction_id,
                 'payment_method':payment_method,
                 'status':status,
@@ -209,9 +213,9 @@ function getCookie(name) {
             },
             success:function(response){
                 console.log("response=>",response)
-                window.location.href=order_complete + '?order_no='+response.order_number+'&trans_id'+response.transaction_id
+                window.location.href=order_complete + 'order_no='+response.order_number+'transaction_id'+response.transaction_id
             }
-        });
+        })
     }
 </script>
 {% endblock contents %}
