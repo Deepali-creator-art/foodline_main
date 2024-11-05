@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "accounts",
     "vendor",
+    "menu",
+    "marketplace",
+    "customer",
+    "orders",
 ]
 
 MIDDLEWARE = [
@@ -66,6 +70,14 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "accounts.context_processor.get_vendor",
+                "marketplace.context_processor.get_cart_counter",
+                "marketplace.context_processor.get_cart_amount",
+                "accounts.context_processor.get_user_profile",
+                #"accounts.context_processor.get_google_api",
+                "accounts.context_processor.get_paypal_client_id",
+
+                
             ],
         },
     },
@@ -143,3 +155,8 @@ EMAIL_HOST_USER='dshinkar@sevenmentor.com'
 EMAIL_HOST_PASSWORD='lisu vcru fwsa soaz'
 EMAIL_USE_TLS=True
 DEFAULT_FROM_EMAIL='Foodonline Marketplace <dshinkar@sevenmentor.com>'
+
+#GOOGLE_API_KEY="AIzaSyD8xOstoZNWl9wfZ-eWF-7mGx5EzdKLseY" 
+PAYPAL_CLIENT_ID='AWN7YlTx3A4S6vO8E7MmV6nw-c45wIuu-iXW7RZeJZvfRoSb6gMvxXc3maHjszdrNQwdoobJ0e4F9PLp'
+SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
+PAYPAL_SECRETE_KEY='EPtJs9g428uX0nfUThCnxriZ4ZAIXWCeUXFsSWjom4iMxz8imPRGH4_00FIEp0FsMbqHhrZwXn--i0I_'

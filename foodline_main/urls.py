@@ -19,9 +19,17 @@ from django.urls import path,include
 from .views import home
 from django.conf import settings
 from django.conf.urls.static import static
-
+from marketplace import views as marketplaceview
+from marketplace import views as cartview
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("",home,name='home'),
     path("accounts/",include("accounts.urls")),
+    path("marketplace/",include("marketplace.urls")),
+    path("search/",marketplaceview.search,name='search'),
+        #view cart
+    path('cart/',cartview.cart,name='cart'),
+    #chaeckout
+    path("checkout/",marketplaceview.checkout,name='checkout'),
+    path('orders/',include('orders.urls')),
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
