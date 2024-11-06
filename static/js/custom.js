@@ -1,3 +1,34 @@
+let autocomplete;
+
+function initAutoComplete(){
+autocomplete = new google.maps.places.Autocomplete(
+    document.getElementById('id_address'),
+    {
+        types: ['geocode', 'establishment'],
+        //default in this app is "IN" - add your country code
+        componentRestrictions: {'country': ['in']},
+    })
+// function to specify what should happen when the prediction is clicked
+autocomplete.addListener('place_changed', onPlaceChanged);
+}
+
+function onPlaceChanged (){
+    var place = autocomplete.getPlace();
+
+    // User did not select the prediction. Reset the input field or alert()
+    if (!place.geometry){
+        document.getElementById('id_address').placeholder = "Start typing...";
+    }
+    else{
+        console.log('place name=>', place.name)
+    }
+    // get the address components and assign them to the fields
+}
+
+
+
+
+
 $(document).ready(function(){
     $('.add_to_cart').on('click',function(e){
         e.preventDefault();
@@ -20,13 +51,13 @@ $(document).ready(function(){
                 }else{
                     $('#cart_counter').html(response.cart_counter['cart_count'])
                     $('#qty-'+food_id).html(response.qty)
-                    //subtotal,tax,total
-                    //applyCartAmounts(
-                        //response.cart_amount['subtotal'],
-                        //response.cart_amount['tax_dict'],
-                        //response.cart_amount['grand_total'],
+                    subtotal,tax,total
+                    applyCartAmounts(
+                        response.cart_amount['subtotal'],
+                        response.cart_amount['tax_dict'],
+                        response.cart_amount['grand_total'],
     
-                        //) 
+                    ) 
                     
 
                 }
