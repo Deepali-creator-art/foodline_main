@@ -96,14 +96,16 @@
                                             {% for item in cart_items %}
                                             <li id="cart-item-{{item.id}}">
                                                 <div class="image-holder"> 
-                                                    <img src="{{item.fooditem.image.url}}" alt=""></div>
+                                                    <img src="{{item.fooditem.image.url}}" alt="">
+                                                </div>
                                                 <div class="text-holder">
                                                     <h6>{{item.fooditem}}</h6>
                                                     <span>{{item.fooditem.description}}</span>
                                                 <a href="{% url 'vendor_detail' item.fooditem.vendor.vendor_slug %}" class="badge badge-warning">{{item.fooditem.vendor}}</a>
 
                                                 </div>
-                                                <div class="quantity" style="display:inline-block;position:absolute;top:50px;transform:translateY(-50%);margin-top:-20px">
+                                                <div class="quantity" 
+                                                style="display:inline-block;position:absolute;top:50px;transform:translateY(-50%);margin-top:-20px">
                                                     <span>{{item.quantity}}  qty </span>
 
                                                 </div>

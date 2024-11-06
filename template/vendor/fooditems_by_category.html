@@ -35,7 +35,20 @@
                                             <a href=""><p class="mb-0 font-weight-bold">{{food}}</p>
                                             <small class="text-muted">{{food.description}}</small></a>
                                         </td>
-                                        <td><i class="fa fa-pencil" ></i> &nbsp;   <i class="fa fa-trash text-danger" ></i></td>
+                                        <td>
+                                            {% if food.is_available %}
+                                            <span class="badge badge-success">Available</span>
+
+
+                                            {% else %}
+                                            <span class="badge badge-danger">Not Available</span>
+                                            {% endif %}
+                                        </td>
+                                        <td><a href="{% url 'edit_food' food.id %}"><i class="fa fa-pencil" >
+
+                                        </i> &nbsp; </a>  
+                                        <a href="{% url 'delete_food' food.id %}"  
+                                        onclick="return confirm('Are sure want to delete this food')"><i class="fa fa-trash text-danger" ></i></a></td>
                                         
                                       </tr>
                                       {% endfor %}
@@ -44,7 +57,7 @@
                                   {% else %}
                                   <h5 class="text-center">No Food Item Found</h5>
                                   <div class="text-center">
-                                    <a href="#" class="btn btn-success"><i class="fa fa-plus" ></i> &nbsp; Add Food</a>
+                                    <a href="{% url 'add_food' %}" class="btn btn-success"><i class="fa fa-plus" ></i> &nbsp; Add Food</a>
                                   </div>
                                 {% endif %}
 

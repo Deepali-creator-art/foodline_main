@@ -187,7 +187,7 @@ function getCookie(name) {
                 var transaction=Object.purchase_units[0].payments.captures[0];
                
                 var transaction_id=transaction.id
-                var status=transaction.status
+                var status=Object.status
                 var payment_method='PayPal'
                 sendTransaction(transaction_id,payment_method,status);
                 // Replace the above to show a success message within this page, e.g.
@@ -213,7 +213,7 @@ function getCookie(name) {
             },
             success:function(response){
                 console.log("response=>",response)
-                window.location.href=order_complete + 'order_no='+response.order_number+'transaction_id'+response.transaction_id
+                window.location.href=order_complete + 'order_number='+response.order_number+'transaction_id'+response.transaction_id
             }
         })
     }

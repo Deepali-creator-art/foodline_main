@@ -46,6 +46,7 @@
 
                                    {% endfor %} 
                                   <button class="btn btn-success">  <i class="fa fa-check"></i>Update</button>
+                                  <a href="{% url 'delete_category' category.id %}" class="btn btn-danger" onclick="return confirm('Are sure want to delete this category')"><i class="fa fa-trash"></i>Delete</a>
                                 </form>
 								
 
