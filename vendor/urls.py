@@ -16,4 +16,7 @@ urlpatterns = [
     path("menu_builder/food/edit/<int:pk>/",views.edit_food,name='edit_food'),
     path("menu_builder/food/delete/<int:pk>/",views.delete_food,name='delete_food'),
     
+    path("order_detail/<int:order_number>",views.order_detail,name='vendor_order_detail'),
+    path("my_orders/",views.my_orders,name='vendor_my_orders'),
+    
 ]
