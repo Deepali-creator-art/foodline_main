@@ -11,6 +11,7 @@ from django.contrib.auth.tokens import default_token_generator
 from vendor.models import Vendor
 from django.template.defaultfilters import slugify
 from orders.models import Order
+import datetime
 
 #Restrict the vendor from accessing the customer
 def check_role_vendor(user):
@@ -149,11 +150,28 @@ def customerDashboard(request):
 def vendorDashboard(request):
     vendor=Vendor.objects.get(user=request.user)
     orders=Order.objects.filter(vendors__in=[vendor.id],is_ordered=True).order_by('-created_at')
-    recent_orders=orders[:5]
+    recent_orders=orders[:10]
+    #current month revenue
+    current_month=datetime.datetime.now().month
+    print(current_month)
+    current_month_orders=orders.filter(vendors__in=[vendor.id],created_at__month=current_month)
+    current_month_revenue=0
+    print(current_month_orders)
+    for i in current_month_orders:
+        current_month_revenue+=i.get_total_by_vendor()['grand_total']
+        
+    #total revenue
+    total_revenue=0
+    for i in orders:
+        total_revenue+=i.get_total_by_vendor()['grand_total']
+    print(current_month_revenue)
+    
     context={
         'orders':orders,
         'orders_count':orders.count(),
-        'recent_orders':recent_orders
+        'recent_orders':recent_orders,
+        'total_revenue':total_revenue,
+        'current_month_revenue':current_month_revenue,
     }
     return render(request,'accounts/vendorDashboard.html',context)
 
