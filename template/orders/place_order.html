@@ -213,7 +213,7 @@ function getCookie(name) {
             },
             success:function(response){
                 console.log("response=>",response)
-                window.location.href=order_complete + 'order_number='+response.order_number+'transaction_id'+response.transaction_id
+                window.location.href=order_complete + '?order_number='+response.order_number+'&transaction_id'+response.transaction_id
             }
         })
     }
