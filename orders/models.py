@@ -60,10 +60,15 @@ class Order(models.Model):
         return ",".join([str(i) for i in self.vendors.all()])
 
     def get_total_by_vendor(self):
+        #request.user
         vendor=Vendor.objects.get(user=request_object.user)
         subtotal=0
         tax=0
         tax_dict={}
+        #"{\"5\": {\"60.00\": \"{'CGST': {'9.00': '5.40'}, 
+        # 'SGST': {'7.00': '4.20'}}\"},
+        # \"3\": {\"50.00\": \"{'CGST': {'9.00': '4.50'}, 
+        # 'SGST': {'7.00': '3.50'}}\"}}"
         if self.total_data:
             total_data=json.loads(self.total_data)
             data=total_data.get(str(vendor.id))
