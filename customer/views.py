@@ -31,9 +31,11 @@ def cprofile(request):
     }
     return render(request,'customer/cprofile.html',context)
 def my_orders(request):
-    orders=Order.objects.filter(user=request.user).order_by('-created_at')
+    orders=Order.objects.filter(user=request.user,is_ordered=True).order_by('-created_at')
+    
     context={
         'orders':orders,
+        
     }
     return render(request,'customer/my_orders.html',context)
 def order_details(request,order_number):
@@ -53,6 +55,6 @@ def order_details(request,order_number):
         }
         return render(request,'customer/order_details.html',context)
     except ObjectDoesNotExist:
-        logger.warning(f"Order not found for user {request.user} with order_no {order_number} and trans_id {transaction_id}")
+        logger.warning(f"Order not found for user {request.user} with order_no {order_number}")
         
         return redirect('customer')
