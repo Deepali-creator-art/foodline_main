@@ -153,10 +153,10 @@ MESSAGE_TAGS={
 #EMAIL CONFIGURATION
 EMAIL_HOST='smtp.gmail.com'
 EMAIL_PORT=587
-EMAIL_HOST_USER='dshinkar@sevenmentor.com'
-EMAIL_HOST_PASSWORD='lisu vcru fwsa soaz'
+EMAIL_HOST_USER='mail id'
+EMAIL_HOST_PASSWORD='password'
 EMAIL_USE_TLS=True
-DEFAULT_FROM_EMAIL='Foodonline Marketplace <dshinkar@sevenmentor.com>'
+DEFAULT_FROM_EMAIL='Foodonline Marketplace <mail id>'
 
 #GOOGLE_API_KEY="google api key" 
 PAYPAL_CLIENT_ID='your paypal id'
