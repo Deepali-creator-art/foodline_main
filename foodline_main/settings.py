@@ -158,7 +158,7 @@ EMAIL_HOST_PASSWORD='lisu vcru fwsa soaz'
 EMAIL_USE_TLS=True
 DEFAULT_FROM_EMAIL='Foodonline Marketplace <dshinkar@sevenmentor.com>'
 
-#GOOGLE_API_KEY="AIzaSyD8xOstoZNWl9wfZ-eWF-7mGx5EzdKLseY" 
-PAYPAL_CLIENT_ID='AWN7YlTx3A4S6vO8E7MmV6nw-c45wIuu-iXW7RZeJZvfRoSb6gMvxXc3maHjszdrNQwdoobJ0e4F9PLp'
+#GOOGLE_API_KEY="google api key" 
+PAYPAL_CLIENT_ID='your paypal id'
 SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
-#PAYPAL_SECRETE_KEY='EPtJs9g428uX0nfUThCnxriZ4ZAIXWCeUXFsSWjom4iMxz8imPRGH4_00FIEp0FsMbqHhrZwXn--i0I_'
+#PAYPAL_SECRETE_KEY='your secret key'
